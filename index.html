@@ -66,7 +66,7 @@
         z-index: 100;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         padding: 1.4rem 3rem;
         background: rgba(9, 9, 15, 0.7);
         backdrop-filter: blur(20px);
@@ -340,7 +340,7 @@
         position: absolute;
         width: 380px;
         height: 380px;
-        border: 0.9px solid rgba(232, 184, 109, 0.35);
+        border: 1px solid rgba(232, 184, 109, 0.35);
         border-radius: 50%;
         animation: spin-slow 20s linear infinite;
       }
@@ -359,7 +359,7 @@
         position: absolute;
         width: 440px;
         height: 440px;
-        border: 0.9px solid rgba(74, 143, 232, 0.3);
+        border: 1px solid rgba(74, 143, 232, 0.3);
         border-radius: 50%;
         animation: spin-slow 30s linear infinite reverse;
       }
@@ -378,7 +378,7 @@
         position: absolute;
         width: 500px;
         height: 500px;
-        border: 0.9px dashed rgba(232, 184, 109, 0.25);
+        border: 1px solid rgba(232, 184, 109, 0.25);
         border-radius: 50%;
         animation: spin-slow 45s linear infinite;
       }
@@ -396,7 +396,7 @@
       }
       .hero-badge-top {
         position: absolute;
-        bottom: 75px;
+        bottom: 95px;
         right: -10px;
         width: 150px;
         background: var(--card);
@@ -405,7 +405,7 @@
         padding: 0.75rem 1rem;
         z-index: 2;
         backdrop-filter: blur(10px);
-        animation: float 3s 0.5s ease-in-out infinite;
+        animation: float-up 3s 0.5s ease-in-out infinite;
       }
       @keyframes spin-slow {
         from {
@@ -439,7 +439,7 @@
         padding: 0.75rem 1rem;
         z-index: 2;
         backdrop-filter: blur(10px);
-        animation: float 3s ease-in-out infinite;
+        animation: float-down 3s ease-in-out infinite;
       }
       @keyframes float {
         0%,
@@ -448,6 +448,24 @@
         }
         50% {
           transform: translateY(-8px);
+        }
+      }
+      @keyframes float-up {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      @keyframes float-down {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(8px);
         }
       }
       .hero-badge-label {
@@ -1107,7 +1125,6 @@
   </head>
   <body>
     <nav>
-      <a href="#hero" class="nav-logo">LHK</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#achievements">Awards</a></li>
