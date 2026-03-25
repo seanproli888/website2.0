@@ -31,7 +31,7 @@ body {
   font-family: "DM Sans", sans-serif;
   background: 
     /* Dark semi-transparent overlay */
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+    linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
     /* Base image */ url("bat wallpaper.webp") center/cover fixed;
   background-color: var(--bg);
   color: var(--text);
@@ -232,10 +232,11 @@ nav.nav-visible {
 /* HERO */
 #hero {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex; /* Changed from grid to block for centering */
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 4rem;
+  text-align: center; /* Center align text */
   padding: 8rem 3rem 4rem;
   position: relative;
   overflow: hidden;
@@ -273,6 +274,8 @@ nav.nav-visible {
 .hero-content {
   position: relative;
   z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
 }
 .hero-tag {
   display: inline-flex;
@@ -328,11 +331,11 @@ h1 span {
 .hero-name-row {
   display: flex;
   align-items: baseline;
-  justify-content: flex-start;
+  justify-content: center; /* Center items */
   gap: 1.5rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  text-align: left;
+  text-align: center; /* Center text */
 }
 .hero-subtitle {
   font-size: 1.2rem;
@@ -345,6 +348,7 @@ h1 span {
 }
 .hero-stats {
   display: flex;
+  justify-content: center; /* Center stats */
   gap: 2.5rem;
   margin-bottom: 2.5rem;
   opacity: 0;
@@ -368,6 +372,7 @@ h1 span {
 }
 .hero-btns {
   display: flex;
+  justify-content: center; /* Center buttons */
   gap: 1rem;
   flex-wrap: wrap;
   opacity: 0;
@@ -410,15 +415,15 @@ h1 span {
 
 /* Hero image */
 .hero-image-wrap {
+  display: none; /* Hide hero image wrap */
+  /*
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   animation: fadeIn 1.2s 0.4s ease forwards;
-}
-.hero-image-wrap[data-parallax] {
-  transition: transform 0.1s linear;
+  */
 }
 .hero-image-glow {
   position: absolute;
@@ -625,20 +630,78 @@ h2 em {
 
 /* ABOUT SECTION */
 #about {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
-  padding: 100px 5%;
   background-color: transparent;
   z-index: 10;
 }
-.about-grid {
+#about > .section-label {
+  padding: 100px 5% 0;
+}
+.zigzag-section {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 4rem 5%;
+  align-items: center;
+}
+#about .zigzag-section:first-of-type {
+  padding-top: 2rem;
+}
+.zigzag-alt {
+  background: rgba(255, 255, 255, 0.02);
+}
+.zigzag-reversed .zigzag-text {
+  order: 2;
+}
+.zigzag-reversed .zigzag-image {
+  order: 1;
+}
+.zigzag-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.zigzag-heading {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1.2;
+}
+.zigzag-text p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+.zigzag-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zigzag-image img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 12px;
+}
+.interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.interest-tag {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+.expertise-section {
+  padding: 2rem 5% 5rem;
 }
 .about-text p {
   color: var(--muted);
@@ -719,7 +782,6 @@ h2 em {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
-  justify-content: flex-end;
 }
 .lang-badge {
   font-size: 0.68rem;
@@ -1316,8 +1378,28 @@ footer {
   .hero-btns {
     justify-content: center;
   }
-  .about-grid {
+  .zigzag-section {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 1.5rem;
+  }
+  #about > .section-label {
+    padding: 80px 1.5rem 0;
+  }
+  #about .zigzag-section:first-of-type {
+    padding-top: 2rem;
+  }
+  .zigzag-reversed .zigzag-text {
+    order: 1;
+  }
+  .zigzag-reversed .zigzag-image {
+    order: 2;
+  }
+  .zigzag-image img {
+    height: 300px;
+  }
+  .expertise-section {
+    padding: 2rem 1.5rem 4rem;
   }
   nav {
     padding: 1rem 1rem;
