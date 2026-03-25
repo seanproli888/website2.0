@@ -135,6 +135,25 @@ document
     revealObserver.observe(el);
   });
 
+// Dedicated observer for opposing slide-in elements (30% threshold, staggered delay)
+const slideInObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        slideInObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.3 },
+);
+
+document
+  .querySelectorAll(".slide-in-left, .slide-in-right")
+  .forEach((el) => {
+    slideInObserver.observe(el);
+  });
+
 // ===== FLOATING PARTICLES for sections =====
 document
   .querySelectorAll("#achievements, #education")

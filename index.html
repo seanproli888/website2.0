@@ -32,10 +32,9 @@
           Economist · Case Competitor · Creator
         </div>
       </div>
-      <div class="intro-scroll-hint" id="introScrollHint">
-        <span>Scroll to explore</span>
-        <div class="intro-scroll-arrow"></div>
-      </div>
+      <button class="explore-btn" id="introScrollHint" aria-label="Click to explore">
+        Click to Explore
+      </button>
     </div>
 
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -61,8 +60,8 @@
       <section id="about">
         <div class="section-label">// 01 — About</div>
         <!-- Section 1: My Journey — text left, image right -->
-        <div class="zigzag-section reveal">
-          <div class="zigzag-text">
+        <div class="zigzag-section">
+          <div class="zigzag-text slide-in-left">
             <h3 class="zigzag-heading">My Journey</h3>
             <p>
               I'm a first-year CUHK BBA-JD student with a deep passion for
@@ -72,7 +71,7 @@
               that make powerful ideas accessible to everyone.
             </p>
           </div>
-          <div class="zigzag-image">
+          <div class="zigzag-image slide-in-right">
             <img
               src="wp14401400-4k-mobile-batman-wallpapers.jpg"
               alt="Who I Am"
@@ -575,5 +574,16 @@
     ></script>
     <script src="main.js"></script>
     <script src="gallery.js"></script>
+
+    <!-- Time-Travel Overlay -->
+    <div id="timeTravelOverlay" aria-hidden="true">
+      <div class="tt-warp"></div>
+      <div class="tt-scanlines"></div>
+      <div class="tt-chroma r"></div>
+      <div class="tt-chroma b"></div>
+      <div class="tt-flash" id="ttFlash"></div>
+    </div>
+
+    <script src="timetravel.js"></script>
   </body>
 </html>

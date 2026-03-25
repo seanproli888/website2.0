@@ -2684,3 +2684,208 @@ h2.visible .heading-line {
   z-index: 2;
   background-color: transparent; /* Ensure background is transparent */
 }
+
+/* Opposing slide-in animations for About section */
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(100px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 200ms;
+}
+.slide-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 400ms;
+}
+
+/* ===== EXPLORE BUTTON ===== */
+.explore-btn {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  opacity: 0;
+  animation: fadeUp 1s 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             btnPulse 2.4s 2.6s ease-in-out infinite;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid #c9a84c;
+  color: #c9a84c;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.75rem 2rem;
+  border-radius: 2px;
+  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+.explore-btn:hover {
+  background: rgba(201, 168, 76, 0.12);
+  box-shadow: 0 0 18px rgba(201, 168, 76, 0.35), inset 0 0 12px rgba(201, 168, 76, 0.08);
+  color: #e8c97a;
+}
+.explore-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(201, 168, 76, 0.2); }
+  50%       { box-shadow: 0 0 22px rgba(201, 168, 76, 0.5), inset 0 0 10px rgba(201, 168, 76, 0.1); }
+}
+
+/* ===== TIME-TRAVEL OVERLAY ===== */
+#timeTravelOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  overflow: hidden;
+  display: none;
+}
+#timeTravelOverlay.active { display: block; }
+
+.tt-warp {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.9) 100%);
+  pointer-events: none;
+}
+.tt-warp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-conic-gradient(rgba(255,255,255,0.03) 0deg, transparent 0.4deg, transparent 3deg);
+  animation: warpSpin 0.4s linear infinite;
+  transform-origin: center center;
+}
+@keyframes warpSpin { to { transform: rotate(360deg); } }
+
+.tt-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 4px);
+  pointer-events: none;
+  animation: scanlineShift 0.12s steps(1) infinite;
+}
+@keyframes scanlineShift {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+.tt-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transform: scale(1.15);
+  filter: blur(12px) brightness(0.4);
+}
+.tt-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tt-frame.tt-enter { animation: frameEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.tt-frame.tt-hold { opacity: 1; transform: scale(1); filter: blur(0) brightness(0.75); }
+.tt-frame.tt-glitch-out { animation: frameGlitchOut 0.3s steps(4) forwards; }
+
+@keyframes frameEnter {
+  0%   { opacity: 0; transform: scale(1.18); filter: blur(14px) brightness(0.3); }
+  60%  { opacity: 1; transform: scale(1.02); filter: blur(2px) brightness(0.85); }
+  100% { opacity: 1; transform: scale(1);    filter: blur(0) brightness(0.75); }
+}
+@keyframes frameGlitchOut {
+  0%   { opacity: 1; clip-path: inset(0 0 0 0);        filter: hue-rotate(0deg)   brightness(0.75); transform: translateX(0); }
+  25%  { opacity: 1; clip-path: inset(10% -8px 30% 0); filter: hue-rotate(90deg)  brightness(1.4) saturate(3); transform: translateX(-6px); }
+  50%  { opacity: 1; clip-path: inset(40% 0 20% -8px); filter: hue-rotate(200deg) brightness(0.5); transform: translateX(8px); }
+  75%  { opacity: 0.6; clip-path: inset(60% -4px 5% 0);filter: hue-rotate(320deg) brightness(2);   transform: translateX(-4px); }
+  100% { opacity: 0; clip-path: inset(0 0 0 0);         filter: hue-rotate(0deg)   brightness(1);   transform: translateX(0); }
+}
+
+.tt-chroma {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: chromaFlicker 0.25s steps(2) infinite;
+  opacity: 0;
+}
+.tt-chroma.r { background: rgba(255,0,0,0.07); transform: translate(-3px,0); }
+.tt-chroma.b { background: rgba(0,80,255,0.07); transform: translate(3px,0); }
+@keyframes chromaFlicker {
+  0%, 100% { opacity: 0; }
+  40%       { opacity: 1; }
+  70%       { opacity: 0.5; }
+}
+
+.tt-era {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.tt-era.tt-era-show { animation: eraFadeIn 0.4s 0.25s ease forwards; }
+@keyframes eraFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.tt-era-year {
+  display: block;
+  font-family: "DM Mono", monospace;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: #c9a84c;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 30px rgba(201,168,76,0.6), 0 0 60px rgba(201,168,76,0.3);
+  line-height: 1;
+}
+.tt-era-title {
+  display: block;
+  font-family: "DM Mono", monospace;
+  font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.tt-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+.tt-flash.tt-flash-pop { animation: flashPop 0.25s ease-out forwards; }
+@keyframes flashPop {
+  0%   { opacity: 0.65; }
+  100% { opacity: 0; }
+}
+
+#timeTravelOverlay.tt-fade-out { animation: overlayFadeOut 0.8s ease forwards; }
+@keyframes overlayFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}

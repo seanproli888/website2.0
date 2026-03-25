@@ -33,11 +33,4 @@ window.addEventListener(
   { passive: true },
 );
 
-// Clicking scroll hint scrolls to site content
-document
-  .getElementById("introScrollHint")
-  .addEventListener("click", () => {
-    document
-      .querySelector(".site-content")
-      .scrollIntoView({ behavior: "smooth" });
-  });
+// Click-to-explore is now handled by timetravel.js
