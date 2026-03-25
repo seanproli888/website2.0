@@ -155,22 +155,8 @@ document
   });
 
 // ===== SMOOTH SCROLL NAV HIGHLIGHT =====
-const allSections = document.querySelectorAll("section[id]");
-const allNavLinks = document.querySelectorAll(".nav-links a");
-const navHighlightObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        allNavLinks.forEach((link) => {
-          link.classList.remove("nav-active");
-          if (link.getAttribute("href") === "#" + id) {
-            link.classList.add("nav-active");
-          }
-        });
-      }
-    });
-  },
-  { threshold: 0.3, rootMargin: "-20% 0px -60% 0px" },
-);
-allSections.forEach((s) => navHighlightObserver.observe(s));
+/* 
+Self-correction: Removing the automatic navigation highlighting (gold underline) 
+based on scroll position as per user request. 
+Navigation will now only highlight on hover.
+*/
