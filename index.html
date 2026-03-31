@@ -120,150 +120,156 @@
           </div>
         </div>
 
-        <!-- Areas of Expertise -->
-        <div class="expertise-section reveal">
-          <p class="skills-label">Areas of Expertise</p>
-          <div class="skills-list">
-            <span class="skill-tag">Economics</span>
-            <span class="skill-tag">Strategic Analysis</span>
-            <span class="skill-tag">Microsoft Office</span>
-            <span class="skill-tag">Web Design</span>
-            <span class="skill-tag">Video Editing</span>
-            <span class="skill-tag">Stock Markets</span>
-            <span class="skill-tag">Artificial Intelligence</span>
-            <span class="skill-tag">Content Creation</span>
+        <!-- Areas of Expertise — Full-viewport WebGL Slider -->
+        <div id="skills-webgl" class="skills-viewport reveal">
+          <canvas id="skills-canvas"></canvas>
+
+          <!-- Text overlay (HTML for SEO / accessibility) -->
+          <div class="slide-overlay">
+            <p class="slide-category">DISCIPLINE</p>
+            <h3 class="slide-title">Economics</h3>
+            <p class="slide-desc">Macro & micro analysis, policy evaluation, and econometric modelling.</p>
           </div>
+
+          <!-- Vertical dot nav (right edge) -->
+          <div class="slider-dots"></div>
+
+          <!-- Counter (bottom-left) -->
+          <div class="slider-counter">
+            <span class="counter-current">01</span>
+            <span class="counter-divider">/</span>
+            <span class="counter-total">08</span>
+          </div>
+
+          <!-- Arrows -->
+          <button class="slider-arrow slider-prev" aria-label="Previous skill">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="slider-arrow slider-next" aria-label="Next skill">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+
+          <!-- Section label -->
+          <span class="slider-section-label">Areas of Expertise</span>
         </div>
       </section>
 
-      <!-- ACHIEVEMENTS -->
+      <!-- ACHIEVEMENTS — Scroll-driven sticky experience -->
       <section id="achievements">
-        <div class="section-label">// 02 — Achievements</div>
-        <h2>Awards & <em>Honours</em></h2>
+        <!-- Parallax background glow -->
+        <div class="awards-bg-glow"></div>
 
-        <!-- Economics Category -->
-        <div class="awards-category" id="awards-economics">
-          <div class="awards-category-header">
-            <div class="awards-category-icon econ">📊</div>
-            <div class="awards-category-title">
-              <em>Economics</em> Competitions
-            </div>
-            <div class="awards-category-count">4 AWARDS</div>
+        <!-- Sticky viewport -->
+        <div class="awards-sticky">
+          <!-- Header -->
+          <div class="awards-header">
+            <div class="section-label">// 02 — Achievements</div>
+            <h2>Awards & <em>Honours</em></h2>
           </div>
-          <div class="awards-list">
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🥇</div>
-              <div class="award-body">
-                <div class="award-title">World Economics Cup 2024</div>
-                <div class="award-detail">
-                  Individual and Team Gold Medalist. Achieved Top 10 scorer
-                  globally with Highest Distinction
-                </div>
-              </div>
-              <span class="award-badge badge-gold">Gold · Top 10</span>
-            </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🌏</div>
-              <div class="award-body">
-                <div class="award-title">Hong Kong Team Member — IEO</div>
-                <div class="award-detail">
-                  Selected as one of the Hong Kong Team Members at the
-                  International Economics Olympiad
-                </div>
-              </div>
-              <span class="award-badge badge-gold">HK Team</span>
-            </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🥈</div>
-              <div class="award-body">
-                <div class="award-title">IEO Winter Challenge</div>
-                <div class="award-detail">
-                  Silver Medalist in both editions of the International
-                  Economics Olympiad Winter Challenge (2023 & 2024)
-                </div>
-              </div>
-              <span class="award-badge badge-silver">Silver × 2</span>
-            </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🏆</div>
-              <div class="award-body">
-                <div class="award-title">Hong Kong Economics Olympiad</div>
-                <div class="award-detail">
-                  Gold Award recipient at the Hong Kong Economics Olympiad
-                </div>
-              </div>
-              <span class="award-badge badge-gold">Gold Award</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Business Category -->
-        <div class="awards-category" id="awards-business">
-          <div class="awards-category-header">
-            <div class="awards-category-icon biz">💼</div>
-            <div class="awards-category-title">
-              <em>Business</em> Competitions
+          <!-- Active category label -->
+          <div class="awards-active-category">Economics</div>
+
+          <!-- Card stack (all cards layered, driven by scroll) -->
+          <div class="awards-card-stage">
+            <!-- Economics awards -->
+            <div class="award-scroll-card" data-category="Economics">
+              <div class="asc-inner">
+                <div class="asc-medal">🥇</div>
+                <div class="asc-content">
+                  <div class="asc-title">World Economics Cup 2024</div>
+                  <div class="asc-detail">Individual and Team Gold Medalist. Achieved Top 10 scorer globally with Highest Distinction.</div>
+                </div>
+                <span class="award-badge badge-gold">Gold · Top 10</span>
+              </div>
             </div>
-            <div class="awards-category-count">4 AWARDS</div>
+
+            <div class="award-scroll-card" data-category="Economics">
+              <div class="asc-inner">
+                <div class="asc-medal">🌏</div>
+                <div class="asc-content">
+                  <div class="asc-title">Hong Kong Team Member — IEO</div>
+                  <div class="asc-detail">Selected as one of the Hong Kong Team Members at the International Economics Olympiad.</div>
+                </div>
+                <span class="award-badge badge-gold">HK Team</span>
+              </div>
+            </div>
+
+            <div class="award-scroll-card" data-category="Economics">
+              <div class="asc-inner">
+                <div class="asc-medal">🥈</div>
+                <div class="asc-content">
+                  <div class="asc-title">IEO Winter Challenge</div>
+                  <div class="asc-detail">Silver Medalist in both editions of the International Economics Olympiad Winter Challenge (2023 & 2024).</div>
+                </div>
+                <span class="award-badge badge-silver">Silver × 2</span>
+              </div>
+            </div>
+
+            <div class="award-scroll-card" data-category="Economics">
+              <div class="asc-inner">
+                <div class="asc-medal">🏆</div>
+                <div class="asc-content">
+                  <div class="asc-title">Hong Kong Economics Olympiad</div>
+                  <div class="asc-detail">Gold Award recipient at the Hong Kong Economics Olympiad.</div>
+                </div>
+                <span class="award-badge badge-gold">Gold Award</span>
+              </div>
+            </div>
+
+            <!-- Business awards -->
+            <div class="award-scroll-card" data-category="Business">
+              <div class="asc-inner">
+                <div class="asc-medal">🚇</div>
+                <div class="asc-content">
+                  <div class="asc-title">MTR × HKGCC Business Case</div>
+                  <div class="asc-detail">Developed a strategic proposal integrating Autonomous Vehicles into the MTR ecosystem to solve Hong Kong's first-last mile problem.</div>
+                </div>
+                <span class="award-badge badge-finalist">1st Runner Up</span>
+              </div>
+            </div>
+
+            <div class="award-scroll-card" data-category="Business">
+              <div class="asc-inner">
+                <div class="asc-medal">🎓</div>
+                <div class="asc-content">
+                  <div class="asc-title">UPenn PennSEM Competition</div>
+                  <div class="asc-detail">Semi-finalist, Global Top 16. Built a Burberry turnaround strategy by identifying brand value erosion and proposing equity-rebuilding initiatives.</div>
+                </div>
+                <span class="award-badge badge-finalist">Global Top 16</span>
+              </div>
+            </div>
+
+            <div class="award-scroll-card" data-category="Business">
+              <div class="asc-inner">
+                <div class="asc-medal">📋</div>
+                <div class="asc-content">
+                  <div class="asc-title">HK Economics Olympiad — Business Case</div>
+                  <div class="asc-detail">Outstanding Business Case Award for analytical excellence and strategic depth.</div>
+                </div>
+                <span class="award-badge badge-gold">Outstanding</span>
+              </div>
+            </div>
+
+            <div class="award-scroll-card" data-category="Business">
+              <div class="asc-inner">
+                <div class="asc-medal">♻️</div>
+                <div class="asc-content">
+                  <div class="asc-title">HKFBS ESG Challenge 2026</div>
+                  <div class="asc-detail">Developed a proposal to reduce Café de Coral's plastic waste by introducing a reusable container option for takeaway orders.</div>
+                </div>
+                <span class="award-badge badge-finalist">Top 8</span>
+              </div>
+            </div>
           </div>
-          <div class="awards-list">
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🚇</div>
-              <div class="award-body">
-                <div class="award-title">MTR × HKGCC Business Case</div>
-                <div class="award-detail">
-                  Developed a strategic proposal integrating Autonomous Vehicles
-                  into the MTR ecosystem to solve Hong Kong's first-last mile
-                  problem.
-                </div>
-              </div>
-              <span class="award-badge badge-finalist">1st Runner Up</span>
+
+          <!-- Progress indicator (right edge) -->
+          <div class="awards-progress">
+            <span class="awards-progress-current">01</span>
+            <div class="awards-progress-track">
+              <div class="awards-progress-fill"></div>
             </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">🎓</div>
-              <div class="award-body">
-                <div class="award-title">UPenn PennSEM Competition</div>
-                <div class="award-detail">
-                  Semi-finalist, Global Top 16. Built a Burberry turnaround
-                  strategy by identifying brand value erosion and proposing
-                  equity-rebuilding initiatives.
-                </div>
-              </div>
-              <span class="award-badge badge-finalist">Global Top 16</span>
-            </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">📋</div>
-              <div class="award-body">
-                <div class="award-title">
-                  HK Economics Olympiad — Business Case
-                </div>
-                <div class="award-detail">
-                  Outstanding Business Case Award for analytical excellence and
-                  strategic depth.
-                </div>
-              </div>
-              <span class="award-badge badge-gold">Outstanding</span>
-            </div>
-            <div class="award-card tilt-card glow-border">
-              <div class="tilt-shine"></div>
-              <div class="award-medal">♻️</div>
-              <div class="award-body">
-                <div class="award-title">HKFBS ESG Challenge 2026</div>
-                <div class="award-detail">
-                  Developed a proposal to reduce Café de Coral's plastic waste
-                  by introducing a reusable container option for takeaway
-                  orders.
-                </div>
-              </div>
-              <span class="award-badge badge-finalist">Top 8</span>
-            </div>
+            <span class="awards-progress-total">08</span>
           </div>
         </div>
       </section>
@@ -385,6 +391,7 @@
         <div class="section-label">// 03 — Experience</div>
         <h2>Work & <em>Roles</em></h2>
         <div class="timeline">
+          <div class="timeline-draw-line"></div>
           <div class="timeline-item">
             <div class="timeline-date">OCT 2025 — PRESENT</div>
             <div class="timeline-role">Generalist</div>
@@ -572,6 +579,9 @@
       data-cfasync="false"
       src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="skills-slider.js"></script>
+    <script src="awards-scroll.js"></script>
     <script src="main.js"></script>
     <script src="gallery.js"></script>
 

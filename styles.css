@@ -700,62 +700,203 @@ h2 em {
   background: var(--gold-dim);
   color: var(--gold);
 }
-.expertise-section {
-  padding: 2rem 5% 5rem;
-}
 .about-text p {
   color: var(--muted);
   line-height: 1.8;
   font-size: 1.1rem;
   margin-bottom: 1.2rem;
 }
-.skills-label {
-  font-family: "Playfair Display", serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  text-transform: none;
-  color: var(--gold);
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+
+/* ── Full-viewport WebGL Skills Slider ────────────────── */
+.skills-viewport {
   position: relative;
-  display: inline-block;
+  width: 100%;
+  height: 80vh;
+  min-height: 480px;
+  max-height: 900px;
+  overflow: hidden;
+  background: #050508;
 }
-.skills-label::after {
-  content: "";
+.skills-viewport canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: block;
-  width: 2rem;
-  height: 2px;
-  background: var(--gold);
-  margin-top: 0.4rem;
-  border-radius: 2px;
+}
+
+/* ── Text overlay ─────────────────────────────────────── */
+.slide-overlay {
+  position: absolute;
+  left: 6%;
+  bottom: 18%;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.slide-overlay.transitioning {
+  opacity: 0;
+  transform: translateY(calc(var(--slide-dir, 1) * 30px));
+}
+.slide-category {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--accent, var(--gold));
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.slide-category::before {
+  content: "";
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--accent, var(--gold));
   opacity: 0.6;
 }
-.about-text p.skills-label {
-  color: var(--gold) !important;
-  font-size: 2.2rem !important;
+.slide-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
-.skills-list {
+.slide-desc {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.55);
+  max-width: 340px;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+/* ── Vertical dot nav (right edge) ────────────────────── */
+.slider-dots {
+  position: absolute;
+  right: 2.5%;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 4;
 }
-.skill-tag {
-  background: var(--card);
-  border: 1px solid rgba(232, 184, 109, 0.35);
-  color: var(--text);
-  font-size: 1.05rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: 4px;
-  transition: all 0.2s;
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.35s, border-color 0.35s, transform 0.35s;
+}
+.slider-dot.active {
+  background: #fff;
+  border-color: #fff;
+  transform: scale(1.4);
+}
+.slider-dot:hover {
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.2);
+}
+
+/* ── Counter (bottom-left) ────────────────────────────── */
+.slider-counter {
+  position: absolute;
+  bottom: 5%;
+  left: 6%;
+  z-index: 4;
+  font-family: "DM Mono", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.counter-current {
+  color: rgba(255,255,255,0.8);
   font-weight: 500;
 }
-.skill-tag:hover {
-  border-color: var(--gold);
+.counter-divider {
+  margin: 0 0.15rem;
+}
+
+/* ── Arrows ───────────────────────────────────────────── */
+.slider-arrow {
+  position: absolute;
+  bottom: 5%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 4;
+  backdrop-filter: blur(4px);
+}
+.slider-arrow:hover {
+  border-color: rgba(255,255,255,0.4);
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+}
+.slider-prev { right: calc(6% + 60px); }
+.slider-next { right: 6%; }
+
+/* ── Section label (top-left) ─────────────────────────── */
+.slider-section-label {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  font-style: italic;
   color: var(--gold);
-  background: var(--gold-dim);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+  z-index: 4;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .skills-viewport {
+    height: 70vh;
+    min-height: 400px;
+  }
+  .slide-overlay {
+    left: 5%;
+    bottom: 22%;
+  }
+  .slide-title {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+  }
+  .slide-desc {
+    font-size: 0.85rem;
+    max-width: 260px;
+  }
+  .slider-arrow {
+    width: 38px;
+    height: 38px;
+  }
+  .slider-prev { right: calc(5% + 50px); }
+  .slider-next { right: 5%; }
+  .slider-dots { right: 3%; gap: 10px; }
+  .slider-dot { width: 8px; height: 8px; }
+}
+@media (max-width: 480px) {
+  .slide-desc { display: none; }
+  .slider-section-label { display: none; }
 }
 .about-info {
 }
@@ -801,175 +942,162 @@ h2 em {
 }
 
 /* ACHIEVEMENTS */
+/* ── Scroll-Driven Awards Section ─────────────────────── */
 #achievements {
-  padding-bottom: 2rem;
+  position: relative;
+  /* 8 awards × 100vh each + buffer */
+  height: 850vh;
+  padding: 0;
+  overflow: visible;
 }
 
-/* AWARDS */
-.awards-category {
-  margin-bottom: 3rem;
-  margin-top: -2.5rem;
-  background: transparent;
-  border: none;
-  border-radius: 20px;
-  overflow: hidden;
+/* Parallax background glow */
+.awards-bg-glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(232, 184, 109, 0.06) 0%,
+    rgba(232, 184, 109, 0.02) 40%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
-.awards-category-header {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0.5rem 2rem;
+
+/* Sticky viewport — pins for the entire scroll journey */
+.awards-sticky {
   position: sticky;
-  top: 70px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Header (stays at top of sticky frame) */
+.awards-header {
+  position: absolute;
+  top: 6%;
+  left: 6%;
   z-index: 10;
-  background: transparent;
-  border-bottom: none;
-  margin-bottom: 5rem;
 }
-.awards-category-header::before {
-  display: none;
+.awards-header .section-label {
+  margin-bottom: 0.4rem;
 }
-.awards-category-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+.awards-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0;
+}
+
+/* Active category label */
+.awards-active-category {
+  position: absolute;
+  top: 6%;
+  right: 10%;
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* Card stage — centered, all cards stacked */
+.awards-card-stage {
+  position: relative;
+  width: min(88%, 680px);
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-.awards-category-icon.econ {
-  background: var(--gold-dim);
-  border: 1px solid rgba(232, 184, 109, 0.25);
-}
-.awards-category-icon.biz {
-  background: var(--blue-dim);
-  border: 1px solid rgba(74, 143, 232, 0.25);
-}
-.awards-category-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.awards-category-title em {
-  color: var(--gold);
-  font-style: italic;
-}
-.awards-category-count {
-  font-family: "DM Mono", monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-left: auto;
-  letter-spacing: 0.08em;
 }
 
-/* Awards vertical list */
-.awards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Individual scroll card */
+.award-scroll-card {
+  position: absolute;
+  width: 100%;
+  will-change: transform, opacity, filter;
+  transition: none; /* driven by JS for scroll-locked feel */
 }
-
-/* Achievement card internal content font sizes */
-.achievement-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-}
-.achievement-org {
-  font-family: "DM Mono", monospace;
-  font-size: 1rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-}
-.achievement-desc {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: rgba(232, 232, 240, 0.7);
-}
-
-.award-card {
-  background: transparent;
+.asc-inner {
+  background: rgba(12, 12, 14, 0.85);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.5rem 1.8rem;
-  position: relative;
-  overflow: hidden;
+  border-radius: 14px;
+  padding: 2rem 2.2rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1.2rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.3s,
-    box-shadow 0.3s;
+  gap: 1.5rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
 }
-.award-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.award-card::before {
+/* Gold accent bar on left */
+.asc-inner::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
+  background: linear-gradient(
+    to bottom,
+    var(--gold) 0%,
+    rgba(232, 184, 109, 0.2) 100%
+  );
 }
-.award-card:hover {
-  border-color: rgba(232, 184, 109, 0.25);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px) !important;
-}
-.award-card:hover::before {
-  opacity: 1;
-}
-.award-medal {
-  font-size: 1.8rem;
-  width: 48px;
-  height: 48px;
+.asc-medal {
+  font-size: 2.2rem;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
   flex-shrink: 0;
 }
-.award-body {
+.asc-content {
   min-width: 0;
 }
-.award-title {
+.asc-title {
   font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  color: var(--text);
+  margin-bottom: 0.4rem;
   line-height: 1.3;
 }
-.award-detail {
-  font-size: 0.88rem;
+.asc-detail {
+  font-size: 0.92rem;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.6;
 }
+
+/* Award badges (shared — kept from original) */
 .award-badge {
   display: inline-block;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.3rem 0.7rem;
-  border-radius: 4px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 5px;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -989,18 +1117,112 @@ h2 em {
   border: 1px solid rgba(74, 143, 232, 0.2);
 }
 
+/* Progress indicator (bottom-center, horizontal) */
+.awards-progress {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+  z-index: 10;
+}
+.awards-progress-current,
+.awards-progress-total {
+  font-family: "DM Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+.awards-progress-current {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+.awards-progress-total {
+  color: rgba(255, 255, 255, 0.3);
+}
+.awards-progress-track {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.awards-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  #achievements {
+    height: 750vh;
+  }
+  .awards-header {
+    top: 4%;
+    left: 5%;
+  }
+  .awards-card-stage {
+    width: 92%;
+  }
+  .asc-inner {
+    padding: 1.4rem 1.2rem;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+  .asc-inner .award-badge {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .asc-medal {
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+  }
+  .asc-title {
+    font-size: 1.1rem;
+  }
+  .asc-detail {
+    font-size: 0.82rem;
+  }
+  .awards-progress-track {
+    width: 100px;
+  }
+  .awards-active-category {
+    right: 5%;
+  }
+}
+@media (max-width: 480px) {
+  .awards-active-category { display: none; }
+  .awards-progress-track { width: 80px; }
+}
+
 /* EXPERIENCE */
 #experience {
   background: transparent;
   border-top: none;
   border-bottom: none;
 }
+#experience > .section-label,
+#experience > h2 {
+  text-align: left;
+}
 .timeline {
   position: relative;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 700px;
+  margin-left: 0;
+  margin-right: auto;
   padding-left: 2.5rem;
 }
+/* Static ghost track (faint guide line) */
 .timeline::before {
   content: "";
   position: absolute;
@@ -1008,34 +1230,69 @@ h2 em {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: rgba(232, 184, 109, 0.08);
 }
+/* Scroll-drawing gold line (height driven by JS) */
+.timeline-draw-line {
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 1px;
+  height: 0%;
+  background: linear-gradient(to bottom, var(--gold), rgba(232, 184, 109, 0.4));
+  z-index: 1;
+  will-change: height;
+  transition: height 0.15s linear;
+}
+
+/* Timeline items — fade-in + slide-up reveal */
 .timeline-item {
   position: relative;
-  padding-bottom: 2.5rem;
+  padding: 1.5rem 1.6rem 2.5rem;
+  border-radius: 10px;
   opacity: 0;
-  transform: translateX(-15px);
+  transform: translateY(30px);
   transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease,
+    padding-left 0.3s ease;
+  cursor: default;
 }
 .timeline-item.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
+
+/* Hover: shift right, subtle highlight, node fills */
+.timeline-item:hover {
+  background: rgba(232, 184, 109, 0.04);
+  padding-left: 2.2rem;
+}
+
+/* Timeline node (circle) */
 .timeline-item::before {
   content: "";
   position: absolute;
   left: -2.5rem;
-  top: 6px;
+  top: 1.8rem;
   width: 8px;
   height: 8px;
-  background: var(--gold);
+  background: transparent;
+  border: 2px solid var(--gold);
   border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--bg);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+}
+/* Node fills solid on hover */
+.timeline-item:hover::before {
+  background: var(--gold);
   box-shadow:
     0 0 0 3px var(--bg),
-    0 0 0 4px rgba(232, 184, 109, 0.3);
+    0 0 8px rgba(232, 184, 109, 0.4);
 }
+
 .timeline-date {
   font-family: "DM Mono", monospace;
   color: var(--gold);
@@ -1058,6 +1315,15 @@ h2 em {
   font-size: 1rem;
   color: var(--muted);
   line-height: 1.7;
+}
+
+/* Responsive — timeline on smaller screens */
+@media (max-width: 768px) {
+  .timeline {
+    margin-right: 4%;
+    margin-left: auto;
+    max-width: 90%;
+  }
 }
 
 /* Experience card internal content font sizes */

@@ -12,7 +12,7 @@ const observer = new IntersectionObserver(
 );
 
 document
-  .querySelectorAll(".reveal, .award-card, .timeline-item, .edu-card")
+  .querySelectorAll(".reveal, .timeline-item, .edu-card")
   .forEach((el) => {
     observer.observe(el);
   });
@@ -173,9 +173,38 @@ document
     section.prepend(container);
   });
 
+// ===== TIMELINE SCROLL-DRAW LINE =====
+(function () {
+  const timeline = document.querySelector(".timeline");
+  const drawLine = document.querySelector(".timeline-draw-line");
+  if (!timeline || !drawLine) return;
+
+  let tlTicking = false;
+  window.addEventListener("scroll", () => {
+    if (!tlTicking) {
+      requestAnimationFrame(() => {
+        const rect = timeline.getBoundingClientRect();
+        const timelineTop = rect.top;
+        const timelineHeight = rect.height;
+        const viewportH = window.innerHeight;
+
+        // How far the viewport has scrolled through the timeline
+        // Start drawing when timeline top reaches 80% of viewport
+        const startOffset = viewportH * 0.8;
+        const scrolledInto = startOffset - timelineTop;
+        const progress = Math.max(0, Math.min(1, scrolledInto / timelineHeight));
+
+        drawLine.style.height = `${progress * 100}%`;
+        tlTicking = false;
+      });
+      tlTicking = true;
+    }
+  }, { passive: true });
+})();
+
 // ===== SMOOTH SCROLL NAV HIGHLIGHT =====
-/* 
-Self-correction: Removing the automatic navigation highlighting (gold underline) 
-based on scroll position as per user request. 
+/*
+Self-correction: Removing the automatic navigation highlighting (gold underline)
+based on scroll position as per user request.
 Navigation will now only highlight on hover.
 */
